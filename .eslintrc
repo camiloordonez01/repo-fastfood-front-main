@@ -4,7 +4,7 @@
         "browser": true,
         "es2021": true
     },
-    "extends": ["prettier", "plugin:react/jsx-runtime", "plugin:jsx-a11y/recommended", "plugin:react-hooks/recommended"],
+    "extends": ["prettier", "plugin:jsx-a11y/recommended", "plugin:react-hooks/recommended"],
     "settings": {
         "import/resolver": {
             "node": {
@@ -20,7 +20,7 @@
         },
         "ecmaVersion": 12
     },
-    "plugins": ["prettier", "react", "react-hooks"],
+    "plugins": ["prettier", "react-hooks"],
     "rules": {
         "react/jsx-filename-extension": 0,
         "no-param-reassign": 0,
@@ -34,18 +34,6 @@
         "jsx-a11y/anchor-is-valid": 0,
         "prefer-destructuring": 0,
         "no-shadow": 0,
-        "no-unused-vars": "off",
-        "prettier/prettier": [
-            2,
-            {
-                "bracketSpacing": true,
-                "printWidth": 140,
-                "singleQuote": true,
-                "trailingComma": "none",
-                "tabWidth": 4,
-                "useTabs": false,
-                "endOfLine": "auto"
-            }
-        ]
+        "no-unused-vars": "off"
     }
 }
