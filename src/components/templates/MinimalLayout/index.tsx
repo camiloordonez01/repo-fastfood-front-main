@@ -10,9 +10,7 @@ const MinimalLayout: FC = () => {
         <>
             <CssVarsProvider theme={theme}>
                 <CssBaseline />
-                <main>
-                    <Outlet />
-                </main>
+                <Outlet />
             </CssVarsProvider>
         </>
     )
