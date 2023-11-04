@@ -1,15 +1,24 @@
 import DashboardLayout from '../components/templates/DashboardLayout'
-import MinimalLayout from '../components/templates/MinimalLayout'
 
-import { BASE, DASHBOARD } from '../utils/constants'
+import { DashboardPage, ServicePage, SalesPage } from '../pages'
+
+import { BASE, DASHBOARD, SERVICE, SALES } from '../utils/constants'
 
 const DashboardRoutes = {
     path: BASE,
-    element: <MinimalLayout />,
+    element: <DashboardLayout />,
     children: [
         {
             path: DASHBOARD,
-            element: <DashboardLayout />
+            element: <DashboardPage />
+        },
+        {
+            path: SERVICE,
+            element: <ServicePage />
+        },
+        {
+            path: SALES,
+            element: <SalesPage />
         }
     ]
 }

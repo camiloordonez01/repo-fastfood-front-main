@@ -1,3 +1,5 @@
 export const BASE = '/'
 export const LOGIN = '/login'
-export const DASHBOARD = '/dashboard'
+export const DASHBOARD = '/panel'
+export const SERVICE = '/servicio'
+export const SALES = '/ventas'
