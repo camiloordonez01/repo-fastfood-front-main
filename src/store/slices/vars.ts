@@ -7,10 +7,17 @@ const initialState: VarsState = {
     title: 'Panel'
 }
 
-const varsSlice = createSlice({
+export const varsSlice = createSlice({
     name: 'vars',
     initialState,
-    reducers: {}
+    reducers: {
+        setTitle: (state, action) => {
+            state.title = action.payload
+        }
+    }
 })
 
-export default varsSlice.reducer
+const { reducer, actions } = varsSlice;
+
+export const { setTitle } = actions
+export default reducer

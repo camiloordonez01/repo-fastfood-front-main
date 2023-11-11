@@ -17,12 +17,13 @@ import { LOGIN } from '../../../utils/constants'
 const DashboardLayout: FC = () => {
     const navigate = useNavigate()
     const { isLoggedIn } = useSelector((state: Reducers) => state.auth)
+    const { title } = useSelector((state: Reducers) => state.vars)
 
-    /*useEffect(() => {
+    useEffect(() => {
         if (isLoggedIn !== undefined && !isLoggedIn) {
             navigate(LOGIN)
         }
-    }, [navigate, isLoggedIn])*/
+    }, [navigate, isLoggedIn])
     return (
         <CssVarsProvider theme={theme}>
             <CssBaseline />
@@ -56,10 +57,10 @@ const DashboardLayout: FC = () => {
                     }}
                 >
                     <Grid container>
-                        {/* <Grid xs={12}>
+                        <Grid xs={12}>
                             <BreadCrumb />
-                            <Typography level='h1' >Titulo</Typography>
-                        </Grid> */}
+                            <Typography level='h1' >{title}</Typography>
+                        </Grid>
                         <Grid xs={12}>
                             <Box
                                 sx={{
