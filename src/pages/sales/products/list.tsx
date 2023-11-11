@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-const SalesPage: FC = () => {
+const ListProductsPage: FC = () => {
     return (
         <>
             <h1>Sales</h1>
@@ -8,4 +8,4 @@ const SalesPage: FC = () => {
     )
 }
 
-export default SalesPage
+export default ListProductsPage

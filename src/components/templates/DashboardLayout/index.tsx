@@ -1,9 +1,8 @@
 import React, { FC, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { Box } from '@mui/joy'
+import { Box, CssBaseline, Grid, Typography } from '@mui/joy'
 import { CssVarsProvider } from '@mui/joy/styles'
-import { CssBaseline } from '@mui/joy'
 
 // Store
 import { Reducers } from '../../../store'
@@ -19,11 +18,11 @@ const DashboardLayout: FC = () => {
     const navigate = useNavigate()
     const { isLoggedIn } = useSelector((state: Reducers) => state.auth)
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (isLoggedIn !== undefined && !isLoggedIn) {
             navigate(LOGIN)
         }
-    }, [navigate, isLoggedIn])
+    }, [navigate, isLoggedIn])*/
     return (
         <CssVarsProvider theme={theme}>
             <CssBaseline />
@@ -56,20 +55,27 @@ const DashboardLayout: FC = () => {
                         gap: 1
                     }}
                 >
-                    <BreadCrumb />
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            my: 1,
-                            gap: 1,
-                            flexDirection: { xs: 'column', sm: 'row' },
-                            alignItems: { xs: 'start', sm: 'center' },
-                            flexWrap: 'wrap',
-                            justifyContent: 'space-between'
-                        }}
-                    >
-                        <Outlet />
-                    </Box>
+                    <Grid container>
+                        {/* <Grid xs={12}>
+                            <BreadCrumb />
+                            <Typography level='h1' >Titulo</Typography>
+                        </Grid> */}
+                        <Grid xs={12}>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    my: 1,
+                                    gap: 1,
+                                    flexDirection: { xs: 'column', sm: 'row' },
+                                    alignItems: { xs: 'start', sm: 'center' },
+                                    flexWrap: 'wrap',
+                                    justifyContent: 'space-between'
+                                }}
+                            >
+                                <Outlet />
+                            </Box>
+                        </Grid>
+                    </Grid>
                 </Box>
             </Box>
         </CssVarsProvider>

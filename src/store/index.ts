@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import { authReducer, messageReducer } from './slices'
+import { authReducer, messageReducer, varsReducer } from './slices'
 import { AuthState } from './slices/auth'
 
 export interface Reducers {
@@ -9,7 +9,8 @@ export interface Reducers {
 export const store = configureStore({
     reducer: {
         auth: authReducer,
-        message: messageReducer
+        message: messageReducer,
+        vars: varsReducer
     }
 })
 

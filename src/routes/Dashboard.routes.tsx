@@ -1,8 +1,10 @@
 import DashboardLayout from '../components/templates/DashboardLayout'
 
-import { DashboardPage, ServicePage, SalesPage } from '../pages'
+import { DashboardPage, ServicePage } from '../pages'
+import { ListProductsPage } from '../pages/sales/products'
+import { ListCategoriesPage } from '../pages/sales/products/categories'
 
-import { BASE, DASHBOARD, SERVICE, SALES } from '../utils/constants'
+import { BASE, DASHBOARD, SERVICE, LISTPRODUCTS, LISTCATEGORIES } from '../utils/constants'
 
 const DashboardRoutes = {
     path: BASE,
@@ -17,8 +19,12 @@ const DashboardRoutes = {
             element: <ServicePage />
         },
         {
-            path: SALES,
-            element: <SalesPage />
+            path: LISTPRODUCTS,
+            element: <ListProductsPage />,
+        },
+        {
+            path: LISTCATEGORIES,
+            element: <ListCategoriesPage />,
         }
     ]
 }
