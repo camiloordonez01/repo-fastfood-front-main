@@ -70,7 +70,7 @@ interface EnhancedTableProps {
     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void
     onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
     order: Order
-    orderBy: string | number
+    orderBy: string | number | null
     rowCount: number
     headCells: HeadCell[]
 }
@@ -183,7 +183,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 }
 
 interface Data {
-    [key: string]: string | number
+    [key: string]: any
 }
 
 interface PropsTable {
@@ -206,7 +206,7 @@ export default function TableSortAndSelection(props: PropsTable) {
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelected = props.data.map((n) => n.name)
+            const newSelected = props.data.map((n) => n.name === null ? '' : n.name)
             setSelected(newSelected)
             return
         }

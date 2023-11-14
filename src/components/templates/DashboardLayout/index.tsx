@@ -19,11 +19,11 @@ const DashboardLayout: FC = () => {
     const { isLoggedIn } = useSelector((state: Reducers) => state.auth)
     const { title } = useSelector((state: Reducers) => state.vars)
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (isLoggedIn !== undefined && !isLoggedIn) {
             navigate(LOGIN)
         }
-    }, [navigate, isLoggedIn])
+    }, [navigate, isLoggedIn])*/
     return (
         <CssVarsProvider theme={theme}>
             <CssBaseline />
