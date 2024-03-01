@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import Box from '@mui/joy/Box'
 import Table from '@mui/joy/Table'
 import Typography from '@mui/joy/Typography'
@@ -18,6 +19,7 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import { visuallyHidden } from '@mui/utils'
+import { TEXTLINKEDIT, TEXTLINKDELETE } from '../../../utils/constants'
 
 function labelDisplayedRows({ from, to, count }: { from: number; to: number; count: number }) {
     return `${from}–${to} of ${count !== -1 ? count : `more than ${to}`}`
@@ -136,10 +138,14 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
 interface EnhancedTableToolbarProps {
     numSelected: number
+    ids: readonly number[]
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     const { numSelected } = props
+
+    const navigate = useNavigate()
+    const location = useLocation()
 
     return (
         <Box
@@ -158,7 +164,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
             }}
         >
             {numSelected === 1 ? (
-                <Tooltip title="Edit" sx={{ marginRight: '10px' }}>
+                <Tooltip title="Editar" sx={{ marginRight: '10px' }} onClick={() => navigate(`${location.pathname}/${props.ids[0]}/${TEXTLINKEDIT}`)}>
                     <IconButton size="sm" color="primary" variant="solid">
                         <EditIcon />
                     </IconButton>
@@ -166,7 +172,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
             ): (<></>)}
 
             {numSelected > 0 ? (
-                <Tooltip title="Delete">
+                <Tooltip title="Eliminar" onClick={() => navigate(`${location.pathname}/${props.ids.join(',')}/${TEXTLINKDELETE}`)}>
                     <IconButton size="sm" color="danger" variant="solid">
                         <DeleteIcon />
                     </IconButton>
@@ -194,7 +200,7 @@ interface PropsTable {
 export default function TableSortAndSelection(props: PropsTable) {
     const [order, setOrder] = React.useState<Order>('asc')
     const [orderBy, setOrderBy] = React.useState<keyof Data>('')
-    const [selected, setSelected] = React.useState<readonly (string | number)[]>([])
+    const [selected, setSelected] = React.useState<readonly number[]>([])
     const [page, setPage] = React.useState(0)
     const [rowsPerPage, setRowsPerPage] = React.useState(5)
 
@@ -206,19 +212,19 @@ export default function TableSortAndSelection(props: PropsTable) {
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelected = props.data.map((n) => n.name === null ? '' : n.name)
+            const newSelected = props.data.map((n) => n.id)
             setSelected(newSelected)
             return
         }
         setSelected([])
     }
 
-    const handleClick = (event: React.MouseEvent<unknown>, name: string | number) => {
-        const selectedIndex = selected.indexOf(name)
-        let newSelected: readonly (string | number)[] = []
+    const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
+        const selectedIndex = selected.indexOf(id)
+        let newSelected: readonly number[] = []
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name)
+            newSelected = newSelected.concat(selected, id)
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1))
         } else if (selectedIndex === selected.length - 1) {
@@ -246,14 +252,14 @@ export default function TableSortAndSelection(props: PropsTable) {
         return rowsPerPage === -1 ? props.data.length : Math.min(props.data.length, (page + 1) * rowsPerPage)
     }
 
-    const isSelected = (name: string | number) => selected.indexOf(name) !== -1
+    const isSelected = (id: number) => selected.indexOf(id) !== -1
 
     // Avoid a layout jump when reaching the last page with empty props.data.
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.data.length) : 0
 
     return (
         <Sheet variant="outlined" sx={{ width: '100%', boxShadow: 'sm', borderRadius: 'sm' }}>
-            <EnhancedTableToolbar numSelected={selected.length} />
+            <EnhancedTableToolbar numSelected={selected.length} ids={selected}/>
             <Table
                 aria-labelledby="tableTitle"
                 hoverRow
@@ -282,16 +288,16 @@ export default function TableSortAndSelection(props: PropsTable) {
                     {stableSort(props.data, getComparator(order, orderBy))
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row, index) => {
-                            const isItemSelected = isSelected(row.name)
+                            const isItemSelected = isSelected(Number(row.id))
                             const labelId = `enhanced-table-checkbox-${index}`
 
                             return (
                                 <tr
-                                    onClick={(event) => handleClick(event, row.name)}
+                                    onClick={(event) => handleClick(event, Number(row.id))}
                                     role="checkbox"
                                     aria-checked={isItemSelected}
                                     tabIndex={-1}
-                                    key={row.name}
+                                    key={row.id}
                                     // selected={isItemSelected}
                                     style={
                                         isItemSelected
@@ -313,13 +319,9 @@ export default function TableSortAndSelection(props: PropsTable) {
                                             sx={{ verticalAlign: 'top' }}
                                         />
                                     </th>
-                                    <th id={labelId} scope="row">
-                                        {row.name}
-                                    </th>
-                                    <td>{row.calories}</td>
-                                    <td>{row.fat}</td>
-                                    <td>{row.carbs}</td>
-                                    <td>{row.protein}</td>
+                                    {props.headCells.map((headCell, indexColum) => (
+                                        <td key={`columnTable${index}${indexColum}`}>{row[headCell.id]}</td>
+                                    ))}
                                 </tr>
                             )
                         })}
@@ -338,7 +340,7 @@ export default function TableSortAndSelection(props: PropsTable) {
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colSpan={6}>
+                        <td colSpan={props.headCells.length + 1}>
                             <Box
                                 sx={{
                                     display: 'flex',

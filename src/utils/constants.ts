@@ -4,9 +4,16 @@ export const DASHBOARD = '/panel'
 export const SERVICE = '/servicio'
 export const SALES = '/ventas'
 export const SERVICES = '/ventas/servicios'
+export const TEXTLINKEDIT = 'editar'
+export const TEXTLINKDELETE = 'eliminar'
 
-// CATEGORIES
-export const LISTCATEGORIES = '/ventas/productos/categorias'
+// SELL
+export const LISTSELL = '/ventas'
 
 // PRODUCTS
-export const LISTPRODUCTS = '/ventas/productos'
+export const LISTPRODUCTS = `${LISTSELL}/productos`
+
+// CATEGORIES
+export const LISTCATEGORIES = `${LISTPRODUCTS}/categorias`
+export const EDITCATEGORIES = `${LISTCATEGORIES}/:id/${TEXTLINKEDIT}`
+

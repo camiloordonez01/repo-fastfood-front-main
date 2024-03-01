@@ -19,18 +19,20 @@ const BreadCrumb: FC = () => {
                     <HomeRoundedIcon />
                 </Link>
                 {pathList.map((path, index) => {
-                    pathIteration += `/${path}`
                     if (!['', 'panel'].includes(path)) {
+                        pathIteration += `/${path}`
+                        console.log(pathIteration)
                         return index === pathList.length - 1 ? (
                             <Typography key={`breadCrumbItem${index}`} color="primary" fontWeight={500} fontSize={12}>
                                 {path.replace(/^\w/, (c) => c.toUpperCase())}
                             </Typography>
                         ) : (
                             <Link
+                                className={`${pathIteration}`}
                                 key={`breadCrumbItem${index}`}
                                 underline="hover"
                                 color="neutral"
-                                onClick={() => navigate(pathIteration)}
+                                onClick={() => navigate(JSON.parse(JSON.stringify(pathIteration)))}
                                 fontSize={12}
                                 fontWeight={500}
                             >

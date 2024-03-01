@@ -2,9 +2,9 @@ import DashboardLayout from '../components/templates/DashboardLayout'
 
 import { DashboardPage, ServicePage } from '../pages'
 import { ListProductsPage } from '../pages/sales/products'
-import { ListCategoriesPage } from '../pages/sales/products/categories'
+import { ListCategoriesPage, EditCategoriesPage } from '../pages/sales/products/categories'
 
-import { BASE, DASHBOARD, SERVICE, LISTPRODUCTS, LISTCATEGORIES } from '../utils/constants'
+import { BASE, DASHBOARD, SERVICE, LISTPRODUCTS, LISTCATEGORIES, EDITCATEGORIES } from '../utils/constants'
 
 const DashboardRoutes = {
     path: BASE,
@@ -25,6 +25,10 @@ const DashboardRoutes = {
         {
             path: LISTCATEGORIES,
             element: <ListCategoriesPage />,
+        },
+        {
+            path: EDITCATEGORIES,
+            element: <EditCategoriesPage />,
         }
     ]
 }

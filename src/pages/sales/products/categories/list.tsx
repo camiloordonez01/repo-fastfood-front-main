@@ -11,20 +11,40 @@ import Table from '../../../../components/molecules/Table'
 // Services
 import { Categories, getCategories } from '../../../../services/products'
 
+type CategoriesType = Omit<Categories, 'subCategories' | 'productCategoryId' | 'categoryId'>
+interface DataTable extends CategoriesType {
+    id: number
+    parent: string
+}
+
 const ListCategoriesPage: FC = () => {
     const dispatch = useDispatch<AppDispatch>()
 
-    const [data, setData] = useState<Omit<Categories, 'subCategories'>[]>([])
+    const [data, setData] = useState<DataTable[]>([])
 
     useEffect(() => {
         dispatch(setTitle('Categorías de producto'))
     }, [dispatch])
 
     const getData = useCallback(async () => {
-        let listCategories: Omit<Categories, 'subCategories'>[] = []
+        let mapCategories = new Map<number, string>()
+        const getMapCategories = async (category: Categories) => {
+            mapCategories.set(category.productCategoryId, category.name)
+
+            if (category.subCategories && category.subCategories.length > 0) {
+                await Promise.all(
+                    category.subCategories.map(async (subCategory) => {
+                        await getMapCategories(subCategory)
+                    })
+                )
+            }
+        }
+
+        let listCategories: DataTable[] = []
         const getDataCategories = async (category: Categories) => {
-            const { subCategories, ...info } = category
-            listCategories.push(info)
+            const { subCategories, productCategoryId, categoryId, ...info } = category
+            const parent = mapCategories.get(categoryId ?? 0) ?? ''
+            listCategories.push({id: productCategoryId, parent,...info})
 
             if (subCategories && subCategories.length > 0) {
                 await Promise.all(
@@ -36,6 +56,12 @@ const ListCategoriesPage: FC = () => {
         }
 
         const categories = getCategories()
+
+        await Promise.all(
+            categories.map(async (category) => {
+                await getMapCategories(category)
+            })
+        )
 
         await Promise.all(
             categories.map(async (category) => {
