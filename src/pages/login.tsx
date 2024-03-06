@@ -1,10 +1,10 @@
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import * as Yup from 'yup'
 import { Formik, FormikHelpers } from 'formik'
-import { Sheet, Typography, FormControl, FormLabel, Input, Button, FormHelperText, Alert, IconButton } from '@mui/joy'
-import { InfoOutlined, CloseRounded } from '@mui/icons-material'
+import { Sheet, Typography, FormControl, FormLabel, Input, Button, FormHelperText, Alert } from '@mui/joy'
+import { InfoOutlined } from '@mui/icons-material'
 
 // store
 import { AppDispatch } from '../store'

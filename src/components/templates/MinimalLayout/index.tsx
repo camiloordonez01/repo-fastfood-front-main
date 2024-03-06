@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { CssVarsProvider } from '@mui/joy/styles'

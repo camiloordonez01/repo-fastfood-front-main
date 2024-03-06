@@ -1,5 +1,5 @@
 import LoginPage from './login'
 import DashboardPage from './dashboard'
-import ServicePage from './service'
+import InventoryPage from './inventory'
 
-export { LoginPage, DashboardPage, ServicePage }
+export { LoginPage, DashboardPage, InventoryPage }

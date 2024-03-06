@@ -17,7 +17,7 @@ export const varsSlice = createSlice({
     }
 })
 
-const { reducer, actions } = varsSlice;
+const { reducer, actions } = varsSlice
 
 export const { setTitle } = actions
 export default reducer

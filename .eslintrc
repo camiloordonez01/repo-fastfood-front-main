@@ -1,39 +1,48 @@
 {
     "root": true,
     "env": {
-        "browser": true,
-        "es2021": true
-    },
-    "extends": ["prettier", "plugin:jsx-a11y/recommended", "plugin:react-hooks/recommended"],
-    "settings": {
-        "import/resolver": {
-            "node": {
-                "moduleDirectory": ["node_modules", "src/"]
-            }
-        }
+        "node": true,
+        "browser": true
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
-            "experimentalObjectRestSpread": true,
-            "impliedStrict": true
+            "jsx": true
         },
-        "ecmaVersion": 12
+        "tsconfigRootDir": "./",
+        "sourceType": "module"
     },
-    "plugins": ["prettier", "react-hooks"],
+    "plugins": ["react", "@typescript-eslint/eslint-plugin"],
+    "extends": [
+        "plugin:@typescript-eslint/recommended", 
+        "plugin:prettier/recommended",
+        "plugin:react/recommended",
+        "plugin:react/jsx-runtime",
+        "plugin:jsx-a11y/recommended", 
+        "plugin:react-hooks/recommended"
+    ],
+    "ignorePatterns": [".eslintrc"],
+    "settings": {
+        "react": {
+            "version": "18.x"
+        }
+    },
     "rules": {
-        "react/jsx-filename-extension": 0,
-        "no-param-reassign": 0,
-        "react/prop-types": 0,
-        "react/require-default-props": 0,
-        "react/no-array-index-key": 0,
-        "react/jsx-props-no-spreading": 0,
-        "react/forbid-prop-types": 0,
-        "import/order": 0,
-        "no-console": 0,
-        "jsx-a11y/anchor-is-valid": 0,
-        "prefer-destructuring": 0,
-        "no-shadow": 0,
-        "no-unused-vars": "off"
+        "linebreak-style": "off",
+        "prettier/prettier": "warn",
+        // Disallow the `any` type.
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-types": [
+            "error",
+            {
+                "extendDefaults": true,
+                "types": {
+                    "{}": false
+                }
+            }
+        ],
+        "react-hooks/exhaustive-deps": "off",
+        // Enforce the use of the shorthand syntax.
+        "object-shorthand": "error"
     }
 }

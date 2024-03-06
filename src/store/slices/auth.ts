@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { login, logout,isLogged } from '../thunks/auth'
+import { login, logout, isLogged } from '../thunks/auth'
 
 export interface AuthState {
     token: string | null
@@ -36,7 +36,7 @@ const authSlice = createSlice({
             state.isLoggedIn = action.payload
         })
 
-        builder.addCase(logout.fulfilled, (state, action) => {
+        builder.addCase(logout.fulfilled, (state) => {
             state.isLoggedIn = false
         })
     }

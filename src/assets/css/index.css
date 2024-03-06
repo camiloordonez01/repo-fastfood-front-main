@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    html {
+        font-family: 'Inter', sans-serif;
+    }
+}
+
 body {
     margin: 0;
+    background-color: black;
+}
+
+::-webkit-scrollbar{
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: rgba(192, 192, 192, 0.4); 
 }
